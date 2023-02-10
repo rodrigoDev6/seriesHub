@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\SeasonStatus;
 use App\Models\Series;
 use App\Models\Episode;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,10 @@ class Season extends Model
         'season_description',
         'season_number',
         'status'
+    ];
+
+    protected $casts = [
+        'status' => SeasonStatus::class,
     ];
 
     public function series(): BelongsTo

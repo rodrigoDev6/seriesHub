@@ -15,8 +15,10 @@ class Episode extends Model
         'season_id',
         'episode_number',
         'watched_episode',
-        'assited_in',
+        'assisted_in',
     ];
+
+    public $timestamps = false;
 
     public function season(): BelongsTo
     {
