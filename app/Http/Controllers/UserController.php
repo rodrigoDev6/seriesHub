@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -16,8 +18,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        //dd($users);
-        return view('user.index', compact('users'));
+        
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -27,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -38,7 +40,16 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        DB::transaction(function() use ($request) {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make('123456')
+            ]);
+
+        });
+
+        return to_route('users.index');
     }
 
 
@@ -50,7 +61,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -62,7 +74,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $user->update($request->all());
+
+        return to_route('users.index');
     }
 
     /**
@@ -73,6 +87,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        DB::transaction(function() use ($user) {
+            $user->delete();
+        });
+
+        return to_route('users.index');
     }
 }

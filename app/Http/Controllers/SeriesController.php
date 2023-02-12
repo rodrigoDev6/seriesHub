@@ -15,7 +15,9 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        //
+        $series = Series::with('user')->simplePaginate(10);
+        
+        return view('series.index', compact('series'));
     }
 
     /**
@@ -25,7 +27,7 @@ class SeriesController extends Controller
      */
     public function create()
     {
-        //
+        return view('series.create');
     }
 
     /**

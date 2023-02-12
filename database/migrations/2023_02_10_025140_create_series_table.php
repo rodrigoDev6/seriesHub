@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('name', 50);
             $table->string('series_description', 255);
-            $table->integer('evaluation_note');
+            $table->integer('evaluation_note')->nullable();
             $table->date('release_date');
             $table->timestamps();
         });
