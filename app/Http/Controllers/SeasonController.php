@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSeasonRequest;
 use App\Http\Requests\UpdateSeasonRequest;
 use App\Models\Season;
+use App\Models\Series;
 
 class SeasonController extends Controller
 {
@@ -13,9 +14,13 @@ class SeasonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Series $series)
     {
-        //
+        $seasons = Season::findOrFail($series->id)->with('episodes')->paginate(5);
+
+        return view('seasons.index')
+            ->with('seasons', $seasons)
+            ->with('series', $series);
     }
 
     /**
@@ -25,7 +30,7 @@ class SeasonController extends Controller
      */
     public function create()
     {
-        //
+        return view('seasons.create');
     }
 
     /**

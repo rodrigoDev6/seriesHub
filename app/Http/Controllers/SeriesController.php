@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Season;
+use App\Models\Series;
+use App\Enums\SeasonStatus;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreSeriesRequest;
 use App\Http\Requests\UpdateSeriesRequest;
-use App\Models\Series;
+use Illuminate\Support\Facades\Auth;
 
 class SeriesController extends Controller
 {
@@ -38,7 +42,29 @@ class SeriesController extends Controller
      */
     public function store(StoreSeriesRequest $request)
     {
-        //
+        
+        DB::transaction(function () use ($request) {
+            $series = Series::create([
+                'user_id' => Auth()->user()->id,
+                'name' => $request->name,
+                'series_description' => $request->series_description,
+                'release_date' => $request->release_date
+            ]);
+            $series->save();
+            
+            $seasons = [];
+            for($n = 1; $n <= $request->season_number; $n++) {
+                $seasons [] = [
+                    'series_id' => $series->id,
+                    'season_number' => $n,
+                    'status' => SeasonStatus::START
+                ];
+            }     
+
+            Season::insert($seasons);
+        });
+        
+        return to_route('series.index');
     }
 
     /**
@@ -49,7 +75,7 @@ class SeriesController extends Controller
      */
     public function edit(Series $series)
     {
-        //
+        return view('series.edit', compact('series'));
     }
 
     /**
@@ -61,7 +87,9 @@ class SeriesController extends Controller
      */
     public function update(UpdateSeriesRequest $request, Series $series)
     {
-        //
+        $series->update($request->all());
+
+        return to_route('series.index');
     }
 
     /**
@@ -72,6 +100,10 @@ class SeriesController extends Controller
      */
     public function destroy(Series $series)
     {
-        //
+        DB::transaction(function () use ($series) {
+            $series->delete();
+        });
+
+        return to_route('series.index');
     }
 }

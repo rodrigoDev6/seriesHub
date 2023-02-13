@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('series', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('name', 50);
             $table->string('series_description', 255);
             $table->integer('evaluation_note')->nullable();

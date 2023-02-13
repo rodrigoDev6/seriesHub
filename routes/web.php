@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SeasonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class)
     ->except('show');
     Route::resource('series', SeriesController::class);
+
+    Route::resource('seasons', SeasonController::class)
+    ->except('show', 'index');
+    Route::get('/seasons/{series}', [SeasonController::class, 'index'])->name('seasons.index');
 });
 
 require __DIR__.'/auth.php';

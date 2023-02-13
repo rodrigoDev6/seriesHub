@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('seasons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('series_id')->constrained();
+            $table->foreignId('series_id')->constrained()->cascadeOnDelete();
             $table->string('season_description', 255)->nullable();
             $table->integer('season_number');
             $table->char('status',1);
