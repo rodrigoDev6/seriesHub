@@ -41,4 +41,24 @@ class Season extends Model
             ->filter(fn($episodes) => $episodes->episode_watched)
             ->count();
     }
+
+    public function status(): string
+    {
+        if($this->status = 'S')
+        {
+            return 'Iniciar';
+        } 
+
+        if($this->status = 'W')
+        {
+            return 'Assitindo';
+        } 
+
+        if($this->status = 'F')
+        {
+            return 'Finalizada';
+        } 
+        
+
+    }
 }

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{__('Temporadas')}}    
+            {!!__('Temporadas de ') . $series->name !!}
         </h2>
     </x-slot>
 
@@ -16,16 +16,19 @@
                         <table class="w-full text-sm text-left text-gray-900 overflow-auto">
                             <thead class="text-md text-gray-700 text-gray-900">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-1 py-3">
                                         #
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-1 py-3">
                                         Episódios
                                     </th>
-                                    <th>
+                                    <th scope="col" class="px-1 py-3">
+                                        Descrição da temporada
+                                    </th>
+                                    <th scope="col" class="px-1 py-3">
                                         Status
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-1 py-3">
                                         Ações
                                     </th>
                                 </tr>
@@ -33,16 +36,19 @@
                             <tbody>
                                 @foreach ($seasons as $season)
                                 <tr class="bg-white border-b border-gray-400 ">
-                                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                    <td class="px-1 py-4 ">
                                         {{ $season->season_number }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-1 py-4">
                                         {{ "{$season->numberOfEpisodeWatched()} / {$season->episodes->count()}" }}
                                     </td>
-                                    <td class="px-6 py-4">
-                                        {{ $season->status }}
+                                    <td class="px-1 py-4">
+                                        {!! Str::limit($season->season_description, 40, '...') !!}
                                     </td>
-                                    <td class="px-6 py-4 flex">
+                                    <td class="px-1 py-4 text-left">
+                                        {{ $season->status() }}
+                                    </td>
+                                    <td class="px-1 py-4 flex">
                                         <a href="#" class="text-blue-500">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
