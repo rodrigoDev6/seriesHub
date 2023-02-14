@@ -14,13 +14,19 @@
                     </div>
                     <div class="relative overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-900 overflow-auto">
-                            <thead class="text-xs text-gray-700 uppercase  text-gray-900">
+                            <thead class="text-xs text-gray-700 uppercase text-gray-900">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
                                         Nome
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Temporadas
+                                        Descrição da série
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Data de lançamento
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Avaliação
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Editar série
@@ -38,6 +44,12 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         {{ $serie->series_description }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ date_format($serie->release_date,"d/m/Y") }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $serie->seriesReviewScore() }}
                                     </td>
                                     <td class="px-6 py-4">
                                         <a href="{{ route('series.edit', $serie->id) }}" class="text-orange-800 justify-center">

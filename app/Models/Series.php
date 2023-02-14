@@ -21,13 +21,27 @@ class Series extends Model
         'release_date',
     ];
 
+    protected $casts = [
+        'release_date' => 'date'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
      public function seasons(): HasMany
-     {
+    {
         return $this->hasMany(Season::class);
-     }
+    }
+
+    public function seriesReviewScore(): int
+    {
+        if (!$this->evaluation_note) {
+            return "0";
+        }
+
+        return $this->evaluation_note;
+    }
+
 }

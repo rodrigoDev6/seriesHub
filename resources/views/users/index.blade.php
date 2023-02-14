@@ -7,9 +7,11 @@
 
     <div class="py-12">
         <div class="mx-auto md:max-w-2xl sm:px-6 lg:px-8">
-            <a href="{{ route('users.create') }}" rel="noopener noreferrer" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-800">Create</a>
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    <div class="flex justify-end mb-2">
+                        <a href="{{ route('users.create') }}" rel="noopener noreferrer" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-800 justify-end">Novo usuário</a>
+                    </div>
                     <div class="relative overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-900 overflow-auto">
                             <thead class="text-xs text-gray-700 uppercase  text-gray-900">

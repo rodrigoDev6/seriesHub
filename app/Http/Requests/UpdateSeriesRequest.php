@@ -24,7 +24,10 @@ class UpdateSeriesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:3',
+            'release_date' => 'required',
+            'season_number' => 'required|numeric',
+            'series_description' => 'required|max:255'
         ];
     }
 }
