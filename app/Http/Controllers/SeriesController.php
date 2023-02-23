@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Season;
 use App\Models\Series;
 use App\Enums\SeasonStatus;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreSeriesRequest;
 use App\Http\Requests\UpdateSeriesRequest;
@@ -19,8 +20,8 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        $series = Series::with('user')->simplePaginate(10);
-        
+        $series = Series::with('user')->orderBy('created_at', 'DESC')->simplePaginate(10);
+
         return view('series.index', compact('series'));
     }
 
@@ -42,7 +43,6 @@ class SeriesController extends Controller
      */
     public function store(StoreSeriesRequest $request)
     {
-        
         DB::transaction(function () use ($request) {
             $series = Series::create([
                 'user_id' => Auth()->user()->id,
@@ -51,7 +51,7 @@ class SeriesController extends Controller
                 'release_date' => $request->release_date
             ]);
             $series->save();
-            
+
             $seasons = [];
             for($n = 1; $n <= $request->season_number; $n++) {
                 $seasons [] = [
@@ -59,11 +59,11 @@ class SeriesController extends Controller
                     'season_number' => $n,
                     'status' => SeasonStatus::START
                 ];
-            }     
+            }
 
             Season::insert($seasons);
         });
-        
+
         return to_route('series.index');
     }
 
@@ -88,7 +88,6 @@ class SeriesController extends Controller
     public function update(UpdateSeriesRequest $request, Series $series)
     {
         $series->update($request->all());
-
         return to_route('series.index');
     }
 

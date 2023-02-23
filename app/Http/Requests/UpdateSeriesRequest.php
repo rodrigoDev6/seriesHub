@@ -25,8 +25,8 @@ class UpdateSeriesRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3',
-            'release_date' => 'required',
-            'season_number' => 'required|numeric',
+            'evaluation_note' => 'nullable',
+            'release_date' => 'required|date',
             'series_description' => 'required|max:255'
         ];
     }

@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('users', UserController::class)
     ->except('show');
-    Route::resource('series', SeriesController::class);
+    Route::resource('series', SeriesController::class)->except('show');
 
     Route::resource('seasons', SeasonController::class)
     ->except('show', 'index');

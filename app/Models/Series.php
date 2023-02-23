@@ -22,8 +22,14 @@ class Series extends Model
     ];
 
     protected $casts = [
+        'evaluation_note' => 'integer',
         'release_date' => 'date'
     ];
+
+    protected $dates = [
+        'release_date',
+    ];
+
 
     public function user(): BelongsTo
     {
@@ -43,5 +49,6 @@ class Series extends Model
 
         return $this->evaluation_note;
     }
+
 
 }

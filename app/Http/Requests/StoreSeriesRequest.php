@@ -25,7 +25,7 @@ class StoreSeriesRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3',
-            'release_date' => 'required',
+            'release_date' => 'required|date',
             'season_number' => 'required|numeric',
             'series_description' => 'required|max:255'
         ];
